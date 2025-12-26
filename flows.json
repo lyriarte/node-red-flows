@@ -7,6 +7,12 @@
         "info": ""
     },
     {
+        "id": "7d15485105b42028",
+        "type": "websocket-listener",
+        "path": "/ws/newsfeed",
+        "wholemsg": "false"
+    },
+    {
         "id": "8bd0a964.98d41",
         "type": "inject",
         "z": "2ed9fe86.816efa",
@@ -83,8 +89,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 670,
-        "y": 260,
+        "x": 570,
+        "y": 300,
         "wires": [
             [
                 "956f54e5.92b508",
@@ -108,9 +114,10 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
+        "allowrate": false,
         "outputs": 1,
-        "x": 880,
-        "y": 380,
+        "x": 820,
+        "y": 320,
         "wires": [
             [
                 "956f54e5.92b508"
@@ -185,11 +192,12 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 880,
-        "y": 260,
+        "x": 820,
+        "y": 240,
         "wires": [
             [
-                "8708e42.1160098"
+                "8708e42.1160098",
+                "53db098884f4df44"
             ],
             [
                 "60189445.c76714"
@@ -208,8 +216,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 950,
-        "y": 120,
+        "x": 850,
+        "y": 100,
         "wires": []
     },
     {
@@ -239,8 +247,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
-        "y": 440,
+        "x": 660,
+        "y": 400,
         "wires": [
             [
                 "107c97cd.b2cad8"
@@ -252,8 +260,19 @@
         "type": "http response",
         "z": "2ed9fe86.816efa",
         "name": "news response",
-        "x": 900,
-        "y": 440,
+        "x": 880,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "53db098884f4df44",
+        "type": "websocket out",
+        "z": "2ed9fe86.816efa",
+        "name": "",
+        "server": "7d15485105b42028",
+        "client": "",
+        "x": 1030,
+        "y": 160,
         "wires": []
     }
 ]
