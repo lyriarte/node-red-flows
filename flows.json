@@ -83,12 +83,13 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 570,
-        "y": 300,
+        "x": 670,
+        "y": 260,
         "wires": [
             [
                 "956f54e5.92b508",
-                "8708e42.1160098"
+                "8708e42.1160098",
+                "ed2f7bc0.9dd0c8"
             ]
         ]
     },
@@ -107,10 +108,9 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "allowrate": false,
         "outputs": 1,
-        "x": 820,
-        "y": 320,
+        "x": 880,
+        "y": 380,
         "wires": [
             [
                 "956f54e5.92b508"
@@ -185,8 +185,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 820,
-        "y": 240,
+        "x": 880,
+        "y": 260,
         "wires": [
             [
                 "8708e42.1160098"
@@ -208,8 +208,52 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
-        "y": 100,
+        "x": 950,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e058008b.6babb8",
+        "type": "http in",
+        "z": "2ed9fe86.816efa",
+        "name": "",
+        "url": "/news",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "cafd784e.2e06e"
+            ]
+        ]
+    },
+    {
+        "id": "ed2f7bc0.9dd0c8",
+        "type": "function",
+        "z": "2ed9fe86.816efa",
+        "name": "news titles page",
+        "func": "var news = msg.payload;\n\nmsg.headers[\"content-type\"]=\"text/html;charset=utf-8\";\nmsg.payload = \"<html>\"\n + \"<head><title>News titles</title></head>\"\n + \"<body>\"\n + \"<h1><a href='http://127.0.0.1:1880'>News titles</a></h1>\";\n\n    msg.payload += \"<ul>\";\n    for (var i=0; i<news.length; i++) {\n        msg.payload += \"<li><a href='\" + news[i].link[0] + \"'>\" + news[i].title[0] + \"</a></li>\";\n    }\n    msg.payload += \"</ul>\";\n\nmsg.payload += \"</body></html>\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 440,
+        "wires": [
+            [
+                "107c97cd.b2cad8"
+            ]
+        ]
+    },
+    {
+        "id": "107c97cd.b2cad8",
+        "type": "http response",
+        "z": "2ed9fe86.816efa",
+        "name": "news response",
+        "x": 900,
+        "y": 440,
         "wires": []
     }
 ]
