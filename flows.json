@@ -1,0 +1,215 @@
+[
+    {
+        "id": "2ed9fe86.816efa",
+        "type": "tab",
+        "label": "RSS feed",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8bd0a964.98d41",
+        "type": "inject",
+        "z": "2ed9fe86.816efa",
+        "name": "News frFR",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"language\":\"fr\",\"country\":\"FR\"}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "cafd784e.2e06e"
+            ]
+        ]
+    },
+    {
+        "id": "cafd784e.2e06e",
+        "type": "http request",
+        "z": "2ed9fe86.816efa",
+        "name": "google news",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://news.google.com/rss?hl={{{payload.language}}}&gl={{{payload.country}}}&ceid={{{payload.country}}}:{{{payload.language}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "2faab6e4.2fda9a"
+            ]
+        ]
+    },
+    {
+        "id": "2faab6e4.2fda9a",
+        "type": "xml",
+        "z": "2ed9fe86.816efa",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "fd2e2bf8.caa91",
+                "8708e42.1160098"
+            ]
+        ]
+    },
+    {
+        "id": "fd2e2bf8.caa91",
+        "type": "function",
+        "z": "2ed9fe86.816efa",
+        "name": "items",
+        "func": "msg.payload=msg.payload.rss.channel[0].item;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 570,
+        "y": 300,
+        "wires": [
+            [
+                "956f54e5.92b508",
+                "8708e42.1160098"
+            ]
+        ]
+    },
+    {
+        "id": "60189445.c76714",
+        "type": "delay",
+        "z": "2ed9fe86.816efa",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 320,
+        "wires": [
+            [
+                "956f54e5.92b508"
+            ]
+        ]
+    },
+    {
+        "id": "775d1d75.6f05dc",
+        "type": "inject",
+        "z": "2ed9fe86.816efa",
+        "name": "News enUS",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"language\":\"en\",\"country\":\"US\"}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "cafd784e.2e06e"
+            ]
+        ]
+    },
+    {
+        "id": "bd4fa2a2.f922f",
+        "type": "inject",
+        "z": "2ed9fe86.816efa",
+        "name": "News enGB",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"language\":\"en\",\"country\":\"GB\"}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "cafd784e.2e06e"
+            ]
+        ]
+    },
+    {
+        "id": "956f54e5.92b508",
+        "type": "function",
+        "z": "2ed9fe86.816efa",
+        "name": "news process",
+        "func": "if (msg.payload.length === 0)\n    return [null,null];\nreturn [\n    {\"payload\":msg.payload[0].title[0]},\n    {\"payload\":msg.payload.slice(1)}\n    ];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 820,
+        "y": 240,
+        "wires": [
+            [
+                "8708e42.1160098"
+            ],
+            [
+                "60189445.c76714"
+            ]
+        ]
+    },
+    {
+        "id": "8708e42.1160098",
+        "type": "debug",
+        "z": "2ed9fe86.816efa",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 100,
+        "wires": []
+    }
+]
