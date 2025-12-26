@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>News feed</title>
+</head>
+
+<body>
+
+<center><h1 id="newstitle"></h1></center>
+
+<script>
+var newsfeedmessage = function(evt) {
+	document.getElementById("newstitle").innerHTML = evt.data;
+};
+
+var init = function () {
+	wsNewsfeed = new WebSocket("ws://127.0.0.1:1880/ws/newsfeed")
+	wsNewsfeed.onmessage = newsfeedmessage;
+};
+
+window.onload = init;
+</script>
+
+</body>
+</html>
